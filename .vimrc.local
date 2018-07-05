@@ -47,8 +47,8 @@ nnoremap <silent> ]B :blast<CR>
 " Insert Mode での移動
 inoremap <C-e> <END>
 inoremap <C-a> <HOME>
-inoremap <C-f> <Left>
-inoremap <C-b> <Right>
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
 inoremap <silent> jj <ESC>
 inoremap <silent> <C-j> <ESC>
 
