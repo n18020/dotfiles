@@ -4,24 +4,26 @@ _DOMAIN="172.16.40.1"
 _PORT=8888
 _IGNORE_PROXY="'*.local'"
 _ENV_FILE_PATH="/etc/environment"
-_APT_FILE_PATH="/etc/apt/apt.conf"
+_APT_FILE_PATH="/etc/apt/apt.conf.d/01proxy"
 _CURL_FILE_PATH="$HOME/.curlrc"
 
 _MODE_MANUAL="manual"
 _MODE_NONE="none"
 
-_APT_CONF_DATA="Acquire::http::proxy \"http://$_DOMAIN:$_PORT/\";\nAcquire::https::proxy \"https://$_DOMAIN:$_PORT/\";\nAcquire::ftp::proxy \"ftp://$_DOMAIN:$_PORT/\";\nAcquire::socks::proxy \"socks://$_DOMAIN:$_PORT/\";"
-_ENV_CONF_DATA="http_proxy=\"http://$_DOMAIN:$_PORT/\"\nhttps_proxy=\"https://$_DOMAIN:$_PORT/\"\nftp_proxy=\"ftp://$_DOMAIN:$_PORT/\"\nsocks_proxy=\"socks://$_DOMAIN:$_PORT/\""
+_APT_CONF_DATA="Acquire::http::proxy \"http://$_DOMAIN:$_PORT/\";\nAcquire::https::proxy \"http://$_DOMAIN:$_PORT/\";\nAcquire::ftp::proxy \"ftp://$_DOMAIN:$_PORT/\";\nAcquire::socks::proxy \"socks://$_DOMAIN:$_PORT/\";"
+_ENV_CONF_DATA="http_proxy=\"http://$_DOMAIN:$_PORT/\"\nhttps_proxy=\"http://$_DOMAIN:$_PORT/\"\nftp_proxy=\"ftp://$_DOMAIN:$_PORT/\"\nsocks_proxy=\"socks://$_DOMAIN:$_PORT/\""
 _CURL_CONF_DATA="proxy=\"http://$_DOMAIN:$_PORT/\""
 
 ######  APT proxy settings
 unset_apt_proxy () {
-	awk '!/^Acquire::\w+::proxy/' $_APT_FILE_PATH > temp && chmod 0644 temp && sudo mv -f temp $_APT_FILE_PATH
+	if [ -f $_APT_FILE_PATH ]; then
+	  sudo rm $_APT_FILE_PATH
+	fi 
 }
 
 set_apt_proxy () {
-	unset_apt_proxy
-	echo -e $_APT_CONF_DATA | cat >> $_APT_FILE_PATH
+	
+	echo -e $_APT_CONF_DATA > temp && chmod 0644 temp && sudo mv -f temp $_APT_FILE_PATH 
 }
 
 unset_curl_proxy() {
@@ -41,7 +43,7 @@ unset_env_proxy () {
 
 set_env_proxy () {
 	unset_env_proxy
-	echo -e $_ENV_CONF_DATA | cat >> $_ENV_FILE_PATH
+	echo -e $_ENV_CONF_DATA | sudo cat >> $_ENV_FILE_PATH
 }
 
 
