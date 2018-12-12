@@ -1,0 +1,20 @@
+""------------------------------------
+" gist
+""------------------------------------
+Plug 'lambdalisue/vim-gista'
+
+""------------------------------------
+" JS Standard (lint)
+""------------------------------------
+Plug 'w0rp/ale'
+let g:ale_linters = {
+\  'javascript':['standard'],
+\}
+let g:ale_fixers = {'javascript':['standard']}
+
+""------------------------------------
+" Helpfile
+""------------------------------------
+Plug 'vim-jp/vimdoc-ja'
+set runtimepath+=~/.vim/plugged/vimdoc-ja
+set helplang=ja,en " 日本語ヘルプ

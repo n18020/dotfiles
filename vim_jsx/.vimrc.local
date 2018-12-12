@@ -1,4 +1,6 @@
 set mouse-=a "no mouse
+set tabstop=2
+set shiftwidth=2
 
 ""------------------------------------
 " Display
@@ -56,8 +58,4 @@ inoremap <silent> <C-j> <ESC>
 vnoremap v $h
 
 
-""------------------------------------
-" Helpfile
-""------------------------------------
-set runtimepath+=~/.vim/plugged/vimdoc-ja
-set helplang=ja,en " 日本語ヘルプ
+
